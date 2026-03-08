@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radiografía sociológica de la cohorte 2026 - TUCEMD</title>
+  <style>
+    :root {
+      --utn-blue: #1f4e79;
+      --utn-blue-dark: #163955;
+      --utn-blue-soft: #eaf2f8;
+      --accent: #5b7cfa;
+      --accent-2: #7c4dff;
+      --text: #243447;
+      --muted: #5f6b7a;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --border: #dbe4ee;
+      --ok: #2e7d32;
+      --warn: #ef6c00;
+      --risk: #c62828;
+      --shadow: 0 12px 30px rgba(20, 45, 90, 0.10);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #eef4fa 0%, #f8fbfd 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--utn-blue-dark) 0%, var(--utn-blue) 55%, #326ea8 100%);
+      color: white;
+      padding: 56px 22px 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero::before {
+      width: 280px;
+      height: 280px;
+      right: -60px;
+      top: -80px;
+    }
+
+    .hero::after {
+      width: 180px;
+      height: 180px;
+      left: -30px;
+      bottom: -70px;
+    }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      max-width: 900px;
+      margin: 0;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .badge {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 0.92rem;
+      backdrop-filter: blur(6px);
+    }
+
+    main {
+      max-width: 1240px;
+      margin: -24px auto 40px;
+      padding: 0 22px 30px;
+    }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 1.35rem;
+      color: var(--utn-blue-dark);
+      letter-spacing: -0.01em;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid.kpi {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .kpi-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::after {
+      content: "";
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      width: 110px;
+      height: 110px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(91,124,250,0.14), rgba(124,77,255,0.10));
+    }
+
+    .kpi-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--utn-blue-dark);
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kpi-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e8eef5;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f3f7fb;
+      color: var(--utn-blue-dark);
+      font-size: 0.92rem;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .bar-group { margin-top: 14px; }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #eaf0f6;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin: 4px 6px 0 0;
+    }
+
+    .pill.ok { background: #e8f5e9; color: var(--ok); }
+    .pill.warn { background: #fff3e0; color: var(--warn); }
+    .pill.risk { background: #ffebee; color: var(--risk); }
+    .pill.info { background: #e8f0fe; color: var(--utn-blue); }
+
+    .callout {
+      border-left: 5px solid var(--accent);
+      background: linear-gradient(180deg, #fbfcff 0%, #f6f8fd 100%);
+    }
+
+    .callout strong {
+      color: var(--utn-blue-dark);
+    }
+
+    ul.clean {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    .footer {
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .hero { padding-top: 42px; }
+      .card { padding: 18px; }
+      .kpi-value { font-size: 1.7rem; }
+      th, td { padding: 10px 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>Radiografía sociológica de la cohorte 2026</h1>
+      <p>
+        Tecnicatura Universitaria en Comercio Electrónico y Marketing Digital.<br>
+        Tablero ejecutivo elaborado a partir del análisis del foro de presentación del Aula de Bienvenida.
+      </p>
+      <div class="badge-row">
+        <span class="badge">Cohorte 2026</span>
+        <span class="badge">Análisis cuantitativo + cualitativo</span>
+        <span class="badge">Base: foro de presentación</span>
+        <span class="badge">Uso sugerido: directivos y coordinación</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2 class="section-title">Indicadores clave</h2>
+      <div class="grid kpi">
+        <article class="card kpi-card">
+          <div class="kpi-label">Participantes en el foro</div>
+          <p class="kpi-value">684</p>
+          <div class="kpi-note">Estudiantes únicos detectados</div>
+        </article>
+        <article class="card kpi-card">
+          <div class="kpi-label">Comentarios totales</div>
+          <p class="kpi-value">1042</p>
+          <div class="kpi-note">Alta interacción inicial</div>
+        </article>
+        <article class="card kpi-card">
+          <div class="kpi-label">Edad promedio</div>
+          <p class="kpi-value">25,6</p>
+          <div class="kpi-note">Con base en 610 edades declaradas</div>
+        </article>
+        <article class="card kpi-card">
+          <div class="kpi-label">Estudiantes que trabajan</div>
+          <p class="kpi-value">≈ 70 %</p>
+          <div class="kpi-note">Perfil predominantemente trabajador</div>
+        </article>
+        <article class="card kpi-card">
+          <div class="kpi-label">Emprendedores</div>
+          <p class="kpi-value">≈ 27 %</p>
+          <div class="kpi-note">Negocios propios o familiares</div>
+        </article>
+        <article class="card kpi-card">
+          <div class="kpi-label">Carreras previas abandonadas</div>
+          <p class="kpi-value">≈ 35 %</p>
+          <div class="kpi-note">Trayectorias educativas no lineales</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid two">
+        <article class="card">
+          <h2 class="section-title">Distribución etaria</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Rango de edad</th>
+                <th>Estudiantes</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>17-21</td>
+                <td>215</td>
+                <td>35,2 %</td>
+              </tr>
+              <tr>
+                <td>22-29</td>
+                <td>246</td>
+                <td>40,3 %</td>
+              </tr>
+              <tr>
+                <td>30-39</td>
+                <td>118</td>
+                <td>19,3 %</td>
+              </tr>
+              <tr>
+                <td>40+</td>
+                <td>31</td>
+                <td>5,1 %</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="bar-group">
+            <div class="bar-label"><span>17-21</span><strong>35,2 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:35.2%"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label"><span>22-29</span><strong>40,3 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:40.3%"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label"><span>30-39</span><strong>19,3 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:19.3%"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label"><span>40+</span><strong>5,1 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:5.1%"></div></div>
+          </div>
+          <p class="small">Edad mínima: 17 años · Edad máxima: 57 años.</p>
+        </article>
+
+        <article class="card">
+          <h2 class="section-title">Mapa de motivaciones</h2>
+          <div class="bar-group">
+            <div class="bar-label"><span>Emprender o potenciar negocio</span><strong>28 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:28%"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label"><span>Profesionalizar conocimientos</span><strong>24 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:24%"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label"><span>Cambio de carrera</span><strong>20 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label"><span>Conseguir empleo</span><strong>18 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label"><span>Interés general en marketing</span><strong>10 %</strong></div>
+            <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
+          </div>
+          <div style="margin-top:16px;">
+            <span class="pill info">Alta orientación laboral</span>
+            <span class="pill info">Búsqueda de aplicación inmediata</span>
+            <span class="pill info">Fuerte lógica de reconversión</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid two">
+        <article class="card">
+          <h2 class="section-title">Trayectoria educativa previa</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Trayectoria</th>
+                <th>% estimado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Primera carrera universitaria</td>
+                <td>≈ 45 %</td>
+              </tr>
+              <tr>
+                <td>Carrera universitaria abandonada</td>
+                <td>≈ 35 %</td>
+              </tr>
+              <tr>
+                <td>Formación terciaria o técnica</td>
+                <td>≈ 15 %</td>
+              </tr>
+              <tr>
+                <td>Profesionales recibidos</td>
+                <td>≈ 5 %</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="small">La cohorte muestra un peso fuerte de trayectorias no lineales y reingreso al sistema educativo.</p>
+        </article>
+
+        <article class="card">
+          <h2 class="section-title">Situación ocupacional</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Indicador</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Estudiantes que trabajan</td>
+                <td>≈ 70-75 %</td>
+              </tr>
+              <tr>
+                <td>Estudiantes que no trabajan</td>
+                <td>≈ 20 %</td>
+              </tr>
+              <tr>
+                <td>Emprendedores o negocios propios</td>
+                <td>≈ 25-30 %</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:14px;">
+            <span class="pill ok">Necesidad de flexibilidad</span>
+            <span class="pill warn">Menor disponibilidad horaria</span>
+            <span class="pill info">Valor alto de la asincronía</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Lectura sociológica de la cohorte</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3 style="margin-top:0;color:var(--utn-blue-dark);">Estudiante típico</h3>
+          <p>Adulto joven, de entre 22 y 29 años, que trabaja, busca mejorar su perfil profesional y ve a la carrera como una vía concreta para insertarse o crecer en el ecosistema digital.</p>
+        </article>
+        <article class="card">
+          <h3 style="margin-top:0;color:var(--utn-blue-dark);">Función real de la carrera</h3>
+          <p>La tecnicatura opera como formación profesional aplicada, espacio de reconversión laboral y plataforma de fortalecimiento para emprendimientos personales o familiares.</p>
+        </article>
+        <article class="card">
+          <h3 style="margin-top:0;color:var(--utn-blue-dark);">Valor institucional percibido</h3>
+          <p>Los estudiantes valoran especialmente la posibilidad de estudiar con modalidad flexible, construir un recorrido formal y obtener un título con proyección laboral concreta.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid two">
+        <article class="card callout">
+          <h2 class="section-title">Alertas tempranas de deserción</h2>
+          <ul class="clean">
+            <li><strong>Sobrecarga laboral:</strong> alta proporción de estudiantes que combinan estudio y trabajo.</li>
+            <li><strong>Trayectorias educativas interrumpidas:</strong> peso significativo de estudiantes que abandonaron carreras previas.</li>
+            <li><strong>Expectativas muy instrumentales:</strong> se espera aplicación rápida y retorno laboral visible.</li>
+          </ul>
+          <div style="margin-top:14px;">
+            <span class="pill risk">Riesgo medio</span>
+            <span class="pill warn">Acompañamiento temprano</span>
+            <span class="pill warn">Seguimiento académico</span>
+          </div>
+        </article>
+
+        <article class="card callout">
+          <h2 class="section-title">Oportunidades para la gestión</h2>
+          <ul class="clean">
+            <li><strong>Diseño orientado a proyectos:</strong> especialmente valioso para emprendedores y estudiantes que ya trabajan.</li>
+            <li><strong>Evaluaciones aplicadas:</strong> conectar contenidos con negocios reales, redes, ecommerce y analítica.</li>
+            <li><strong>Construcción de comunidad:</strong> el foro muestra predisposición al networking y al apoyo entre pares.</li>
+          </ul>
+          <div style="margin-top:14px;">
+            <span class="pill ok">Alta pertinencia profesional</span>
+            <span class="pill ok">Buen potencial de retención</span>
+            <span class="pill info">Comunidad activa</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <article class="card">
+        <h2 class="section-title">Resumen ejecutivo para directivos</h2>
+        <p>
+          La cohorte 2026 presenta un perfil predominantemente compuesto por <strong>adultos jóvenes trabajadores</strong>, con una fuerte orientación a la <strong>empleabilidad</strong>, la <strong>reconversión profesional</strong> y el <strong>desarrollo de emprendimientos</strong>. La tecnicatura es percibida menos como una carrera universitaria tradicional y más como una <strong>puerta de entrada al ecosistema digital</strong>, con demanda de herramientas concretas, flexibilidad y aplicación inmediata.
+        </p>
+        <p>
+          Desde la gestión académica, esto sugiere reforzar propuestas didácticas con anclaje práctico, instancias de acompañamiento temprano y acciones que consoliden comunidad, identidad de cohorte y permanencia.
+        </p>
+      </article>
+    </section>
+
+    <div class="footer">
+      Tablero HTML listo para GitHub Pages · Elaborado a partir del análisis del foro de presentación de la cohorte 2026.
+    </div>
+  </main>
+</body>
+</html>
